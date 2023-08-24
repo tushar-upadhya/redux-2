@@ -1,5 +1,11 @@
+import AppRoutes from "../routes/AppRoutes";
+
 const Home = () => {
-    return <>HOME</>;
+    return (
+        <>
+            <AppRoutes />
+        </>
+    );
 };
 
 export default Home;
