@@ -1,42 +1,67 @@
-import { Card, Button } from "react-bootstrap";
-import data from "../data/data";
 import { useState } from "react";
 
-const Projects = () => {
-    const [projectData, setProjectData] = useState(data);
-    // console.log("projectData:", projectData);
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+
+import CardData from "../data/CardData";
+
+import "./style.css";
+
+import { useDispatch } from "react-redux";
+
+import { ADD } from "../redux/action/action";
+
+const Cards = () => {
+    const [data, setData] = useState(CardData);
+    // console.log("data:", data);
+
+    const dispatch = useDispatch();
+
+    const send = (e) => {
+        // console.log("e:", e);
+        dispatch(ADD(e));
+    };
 
     return (
         <div className="container mt-3">
-            <h2 className="text-center">Add to Cart Projects</h2>
+            <h2 className="text-center">Add to cart</h2>
 
             <div className="row d-flex justify-content-center align-items-center">
-                {projectData.map((element, id) => (
-                    <Card
-                        key={id}
-                        style={{ width: "22rem", border: "none" }}
-                        className="mx-2 mt-3"
-                    >
-                        <Card.Img
-                            variant="top"
-                            src={element.imgdata}
-                            style={{ height: "16rem" }}
-                        />
-                        <Card.Body>
-                            <Card.Title>{element.rname}</Card.Title>
-                            <Card.Text>Price :{element.price}</Card.Text>
-
-                            <div className="button_div d-flex justify-content-center">
-                                <Button variant="primary" className="col-lg-12">
-                                    Add cart
-                                </Button>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                ))}
+                {data.map((element, id) => {
+                    return (
+                        <>
+                            <Card
+                                style={{ width: "20rem", border: "none" }}
+                                className="mx-2 mt-4 card_style"
+                            >
+                                <Card.Img
+                                    variant="top"
+                                    src={element.imgdata}
+                                    style={{ height: "16rem" }}
+                                    className="mt-3"
+                                />
+                                <Card.Body>
+                                    <Card.Title>{element.rname}</Card.Title>
+                                    <Card.Text>
+                                        price : ₹ {element.price}
+                                    </Card.Text>
+                                    <div className="button_div d-flex justify-content-center ">
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => send(element)}
+                                            className="col-lg-12"
+                                        >
+                                            Add to cart
+                                        </Button>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </>
+                    );
+                })}
             </div>
         </div>
     );
 };
 
-export default Projects;
+export default Cards;
